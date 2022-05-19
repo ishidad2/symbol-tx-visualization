@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      このーページでは指定したアドレス（要PublicKey）の送信先と送信件数を調べることが出来ます。
+      このーページでは指定したSymbolアドレス（要PublicKey）のこれまでの送信先と送信件数を調べることが出来ます。
     </div>
     <div>トータル送信件数：{{ count }} 件</div>
     <ul v-for="(address, index) in addresses" :key="index">
