@@ -5,7 +5,7 @@
         <label for="inputPublicKey" class="col-sm-2 col-form-label">PublicKey</label>
       </div>
       <div class="col-xl-4 col-lg-6 col-md-8 col-sm-8 mb-2">
-        <input type="text" class="form-control w40" id="inputPublicKey" v-model="publicKey">
+        <input type="text" class="form-control" id="inputPublicKey" v-model="publicKey">
         Address: {{ address }}
       </div>
       <div class="col-auto mb-2">
