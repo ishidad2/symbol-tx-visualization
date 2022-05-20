@@ -1,6 +1,10 @@
 symbol-tx-visualization
 ===
 
+# DEMO
+
+[demo page](https://ishidad2.github.io/symbol-tx-visualization/)
+
 # Project setup
 ```
 yarn install
