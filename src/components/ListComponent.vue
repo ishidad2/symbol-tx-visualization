@@ -6,14 +6,16 @@
     <div>トータル送信件数：{{ count }} 件</div>
     <ul v-for="(address, index) in addresses" :key="index">
       <li>
-        送信先：<a :href="'https://symbol.fyi/accounts/'+address" target="_blank" rel="noopener noreferrer">{{ address }}</a> 件数：{{ history[address].length }} 
+        送信先：<a :href="createEx(address)" target="_blank" rel="noopener noreferrer">{{ address }}</a> 件数：{{ history[address].length }} 
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { RepositoryFactoryHttp, TransactionGroup, TransactionType, Address } from 'symbol-sdk';
+import { RepositoryFactoryHttp, TransactionGroup, TransactionType, Address, NetworkType } from 'symbol-sdk';
+const mainnet_ex = "https://symbol.fyi/accounts/";
+const testnet_ex = "https://testnet.symbol.fyi/accounts/";
 
 const protocol = "https://";
 const port = ":3001";
@@ -38,6 +40,7 @@ export default {
       addresses: [],
       is_loading: false,
       count: 0,
+      network: NetworkType.TEST_NET,
     }
   },
   methods: {
@@ -54,9 +57,9 @@ export default {
       this.init();
       const repo = new RepositoryFactoryHttp(protocol + this.node + port);
       this.transactionRepo = repo.createTransactionRepository();
-      const network = await repo.getNetworkType().toPromise();
+      this.network = await repo.getNetworkType().toPromise();
       try{
-        const address =  Address.createFromPublicKey(this.publickey, network);
+        const address =  Address.createFromPublicKey(this.publickey, this.network);
         this.$emit('setAddress', address);
       }catch(e){
         this.$swal('Not the correct Symbol address.');
@@ -106,6 +109,9 @@ export default {
       }
       this.is_loading = false
     },
+    createEx(address){
+      return this.network === NetworkType.TEST_NET ? testnet_ex+address : mainnet_ex+address;
+    }
   },
 }
 </script>
