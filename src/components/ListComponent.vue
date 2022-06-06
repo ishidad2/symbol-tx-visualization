@@ -4,6 +4,7 @@
       このーページでは指定したSymbolアドレス（要PublicKey）のこれまでの送信先と送信件数を調べることが出来ます。
     </div>
     <div>トータル送信件数：{{ count }} 件</div>
+    <div>使用XYM：{{total_fee / 1000000}}</div>
     <ul v-for="(address, index) in addresses" :key="index">
       <li>
         送信先：<a :href="createEx(address)" target="_blank" rel="noopener noreferrer">{{ address }}</a> 件数：{{ history[address].length }} 
@@ -40,6 +41,7 @@ export default {
       addresses: [],
       is_loading: false,
       count: 0,
+      total_fee: 0,
       network: NetworkType.TEST_NET,
     }
   },
@@ -85,6 +87,8 @@ export default {
         if(tx.recipientAddress.address in this.history){
           let arr = Object.assign([], this.history[tx.recipientAddress.address]);
           arr.push(tx);
+          this.total_fee += tx.maxFee.compact()
+          console.log(this.total_fee);
           this.history[tx.recipientAddress.address] = arr;
         }else{
           this.history[tx.recipientAddress.address] = Object.assign([], [tx]);
