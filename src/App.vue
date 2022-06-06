@@ -48,8 +48,15 @@ export default {
       address: null,
       selectNode: "",
       selectLists:[
-        { name: "dai-testnet.sfn.tools(testnet)", value: "dai-testnet.sfn.tools" },
+        // { name: "dai-testnet.sfn.tools(testnet)", value: "dai-testnet.sfn.tools" },
         { name: "dual-1.nodes-xym.work(mainnet)", value: "dual-1.nodes-xym.work" },
+        { name: "sym-main-02.opening-line.jp(mainnet)", value: "sym-main-02.opening-line.jp" },
+        { name: "sym-main-01.opening-line.jp(mainnet)", value: "sym-main-01.opening-line.jp" },
+        { name: "sym-main-03.opening-line.jp(mainnet)", value: "sym-main-03.opening-line.jp" },
+        { name: "xym862.allnodes.me(mainnet)", value: "xym862.allnodes.me" },
+        { name: "xym863.allnodes.me(mainnet)", value: "xym863.allnodes.me" },
+        { name: "xym864.allnodes.me(mainnet)", value: "xym864.allnodes.me" },
+        { name: "xym865.allnodes.me(mainnet)", value: "xym865.allnodes.me" },
       ],
     }
   },
