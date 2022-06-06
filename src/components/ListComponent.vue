@@ -5,11 +5,14 @@
     </div>
     <div>トータル送信件数：{{ count }} 件</div>
     <div>使用XYM：{{total_fee / 1000000}}</div>
-    <ul v-for="(address, index) in addresses" :key="index">
-      <li>
-        送信先：<a :href="createEx(address)" target="_blank" rel="noopener noreferrer">{{ address }}</a> 件数：{{ history[address].length }} 
-      </li>
-    </ul>
+    <div>疎通アドレス件数：{{ addresses.length }} 件</div>
+    <div class="d-list">
+      <ul v-for="(address, index) in addresses" :key="index">
+        <li>
+          送信先：<a :href="createEx(address)" target="_blank" rel="noopener noreferrer">{{ address }}</a> 件数：{{ history[address].length }} 
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -82,7 +85,7 @@ export default {
         type: [TransactionType.TRANSFER]
       }).toPromise();
       this.pageNumber++;
-            
+
       txs.data.forEach(tx => {
         try {
           if(tx.recipientAddress.address in this.history){
@@ -120,3 +123,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.d-list{
+  margin: 10px;
+}
+</style>
