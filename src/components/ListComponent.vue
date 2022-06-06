@@ -73,31 +73,32 @@ export default {
     async search(){
       if(this.is_loading) return;
       this.is_loading = true;
-      this.pageNumber++;
       const txs = await this.transactionRepo.search({
         signerPublicKey: this.publickey,
         group: TransactionGroup.Confirmed,
-        pageSize: 30,
+        pageSize: 100,
         pageNumber: this.pageNumber,
         order:"desc",
         type: [TransactionType.TRANSFER]
       }).toPromise();
-      
+      this.pageNumber++;
+            
       txs.data.forEach(tx => {
-        if(tx.recipientAddress.address in this.history){
-          let arr = Object.assign([], this.history[tx.recipientAddress.address]);
-          arr.push(tx);
-          this.total_fee += tx.maxFee.compact()
-          console.log(this.total_fee);
-          this.history[tx.recipientAddress.address] = arr;
-        }else{
-          this.history[tx.recipientAddress.address] = Object.assign([], [tx]);
+        try {
+          if(tx.recipientAddress.address in this.history){
+            let arr = Object.assign([], this.history[tx.recipientAddress.address]);
+            arr.push(tx);
+            this.total_fee += tx.maxFee.compact()
+            console.log(this.total_fee);
+            this.history[tx.recipientAddress.address] = arr;
+          }else{
+            this.history[tx.recipientAddress.address] = Object.assign([], [tx]);
+          }
+          this.addresses.push(tx.recipientAddress.address);
+          this.count++;
+        } catch (error) {
+          console.error(error);
         }
-        if(tx.recipientAddress.address === undefined){
-          console.log(tx);
-        }
-        this.addresses.push(tx.recipientAddress.address);
-        this.count++;
       });
 
       this.addresses = Array.from(new Set(this.addresses));
@@ -105,7 +106,7 @@ export default {
       if(!txs.isLastPage){
         setTimeout(() => {
           this.search();
-        }, 1000);
+        }, 600);
       }else{
         //重複削除
         this.$emit('setLoading', false);
