@@ -82,7 +82,7 @@ export default {
         pageSize: 100,
         pageNumber: this.pageNumber,
         order:"desc",
-        type: [TransactionType.TRANSFER]
+        type: [TransactionType.TRANSFER,TransactionType.AGGREGATE_COMPLETE]
       }).toPromise();
       this.pageNumber++;
 
